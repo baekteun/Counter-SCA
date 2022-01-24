@@ -45,7 +45,7 @@ enum CounterAction: Equatable{
     case playNext
 }
 
-struct gi{
+struct CounterEnvironment{
     var generateRandom: (ClosedRange<Int>) -> Int
     var uuid: UUID
     
