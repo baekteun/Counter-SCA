@@ -45,3 +45,14 @@ enum CounterAction: Equatable{
     case playNext
 }
 
+struct gi{
+    var generateRandom: (ClosedRange<Int>) -> Int
+    var uuid: UUID
+    
+    static let live = CounterEnvironment(
+        generateRandom: Int.random(in:),
+        uuid: UUID.init
+    )
+}
+
+
