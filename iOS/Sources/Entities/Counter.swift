@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ComposableArchitecture
 
 struct CounterState: Equatable, Identifiable{
     var count = 0
@@ -47,7 +48,7 @@ enum CounterAction: Equatable{
 
 struct CounterEnvironment{
     var generateRandom: (ClosedRange<Int>) -> Int
-    var uuid: UUID
+    var uuid: () -> UUID
     
     static let live = CounterEnvironment(
         generateRandom: Int.random(in:),
@@ -55,4 +56,24 @@ struct CounterEnvironment{
     )
 }
 
-
+let counterReducer = Reducer<CounterState, CounterAction, CounterEnvironment>{ state, action, env in
+    switch action{
+    case .increment:
+        state.count += 1
+        return .none
+    case .decrement:
+        state.count -= 1
+        return .none
+    case let .setCount(text):
+        state.countString = text
+        return .none
+    case let .slidingCount(val):
+        state.countFloat = val
+        return .none
+    case .playNext:
+        state.count = 0
+        state.secret = env.generateRandom(-100...100)
+        state.id = env.uuid()
+        return .none
+    }
+}.debug()
