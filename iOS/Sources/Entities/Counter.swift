@@ -15,3 +15,11 @@ struct CounterState: Equatable, Identifiable{
     var id: UUID = UUID()
 }
 
+enum CounterAction: Equatable{
+    case increment
+    case decrement
+    case setCount(String)
+    case slidingCount(Float)
+    case playNext
+}
+
