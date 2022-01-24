@@ -15,6 +15,28 @@ struct CounterState: Equatable, Identifiable{
     var id: UUID = UUID()
 }
 
+extension CounterState{
+    var countString: String{
+        get { String(count) }
+        set { count = Int(newValue) ?? count}
+    }
+    
+    var countFloat: Float{
+        get { Float(count) }
+        set { count = Int(newValue) }
+    }
+    
+    enum CheckResult{
+        case lower, equal, higher
+    }
+    
+    var checkResult: CheckResult{
+        if count < secret { return .lower }
+        if count > secret { return .higher }
+        return .equal
+    }
+}
+
 enum CounterAction: Equatable{
     case increment
     case decrement
